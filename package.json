@@ -1,7 +1,7 @@
 {
-  "name": "autoviz-iframe-app",
+  "name": "autoviz-ar-viewer",
   "version": "1.0.0",
-  "description": "React app that loads 8th Wall AR experience via iFrame",
+  "description": "Simple React app with AR button for AutoViz wheel experience",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
@@ -28,10 +28,10 @@
   },
   "keywords": [
     "react",
-    "8th-wall",
     "ar",
-    "iframe",
-    "autoviz"
+    "8th-wall",
+    "autoviz",
+    "wheel"
   ],
   "author": "Pankaj Parmar",
   "license": "MIT"
