@@ -44,7 +44,17 @@ function App() {
         viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
       }
     }
-  }, []);
+
+    // Set a timeout to detect if iframe is taking too long to load
+    const loadingTimeout = setTimeout(() => {
+      if (!iframeLoaded) {
+        console.log('Iframe loading timeout - providing direct navigation option');
+        setError('AR experience is taking longer than expected to load. This might be due to iframe restrictions. You can try opening it directly.');
+      }
+    }, 10000); // 10 second timeout
+
+    return () => clearTimeout(loadingTimeout);
+  }, [iframeLoaded]);
 
   const handleIframeLoad = () => {
     setIframeLoaded(true);
@@ -53,8 +63,14 @@ function App() {
   };
 
   const handleIframeError = () => {
-    setError('Failed to load the 8th Wall AR experience. Please check your internet connection and try again.');
-    console.error('Error loading 8th Wall AR experience');
+    console.error('Error loading 8th Wall AR experience - likely iframe restrictions');
+    // If iframe fails, redirect to the AR experience directly
+    window.location.href = eighthWallUrl;
+  };
+
+  const handleDirectNavigation = () => {
+    console.log('Navigating directly to 8th Wall AR experience');
+    window.open(eighthWallUrl, '_blank');
   };
 
   return (
@@ -67,25 +83,33 @@ function App() {
       <div className="iframe-container">
         {error && (
           <div className="error-message">
-            <h3>Error Loading AR Experience</h3>
+            <h3>AR Experience Loading Issue</h3>
             <p>{error}</p>
+            <div className="button-group">
+              <button 
+                onClick={() => window.location.reload()} 
+                className="retry-button"
+              >
+                Retry
+              </button>
+              <button 
+                onClick={handleDirectNavigation} 
+                className="direct-nav-button"
+              >
+                Open AR Experience Directly
+              </button>
+            </div>
             {isMobile && (
               <div className="mobile-tips">
                 <p><strong>Mobile Tips:</strong></p>
                 <ul>
                   <li>Make sure you're using HTTPS</li>
                   <li>Allow camera permissions when prompted</li>
-                  <li>Try refreshing the page</li>
+                  <li>Try the "Open Directly" button above</li>
                   <li>Use a modern browser (Chrome/Safari recommended)</li>
                 </ul>
               </div>
             )}
-            <button 
-              onClick={() => window.location.reload()} 
-              className="retry-button"
-            >
-              Retry
-            </button>
           </div>
         )}
         
@@ -99,6 +123,15 @@ function App() {
             {!arSupported && (
               <p className="warning-note">⚠️ AR may not be supported on this device</p>
             )}
+            <div className="loading-actions">
+              <p className="skip-note">Taking too long?</p>
+              <button 
+                onClick={handleDirectNavigation} 
+                className="skip-button"
+              >
+                Open AR Experience Directly
+              </button>
+            </div>
           </div>
         )}
         
