@@ -135,6 +135,36 @@
   opacity: 0.8;
 }
 
+/* Mobile-specific styles */
+.mobile-tips {
+  margin-top: 1rem;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.mobile-tips ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.mobile-tips li {
+  margin: 0.25rem 0;
+}
+
+.mobile-note {
+  color: #667eea;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.warning-note {
+  color: #ffc107;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .app-header {
@@ -158,6 +188,31 @@
   .app-footer {
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
+  }
+  
+  /* Mobile AR specific styles */
+  .iframe-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+  }
+  
+  .ar-iframe {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 1001 !important;
+  }
+  
+  /* Hide header and footer on mobile for full AR experience */
+  .app-header,
+  .app-footer {
+    display: none;
   }
 }
 
